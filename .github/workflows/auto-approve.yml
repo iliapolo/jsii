@@ -28,7 +28,7 @@ jobs:
         with:
           script: |-
             const { issue: { number: pull_number }, repo: { owner, repo }  } = context;
-            const reviews = github.rest.pulls.listReviews({ owner, repo, pull_number })
+            const reviews = (await github.rest.pulls.listReviews({ owner, repo, pull_number })).data
               .filter((review) => review.state !== 'DISMISSED');
             core.setOutput('result', `${reviews.length === 0}`);
 
